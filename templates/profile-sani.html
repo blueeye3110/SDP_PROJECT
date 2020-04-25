@@ -1,0 +1,100 @@
+{% extends "demo.html" %}
+{% block title %}PROFILE{% endblock %}
+
+{% block navbar %}
+<div class="col-8" style=" padding-top: 1.5%;padding-left: 15%;">
+    <form action="{{url_for('search')}}" method="POST">
+        <div class="input-group mb-3"  >
+            <input type="text" class="form-control"  placeholder=" Search Movie....." style=" border-radius: 5px; " name="search" required>
+            <div>
+                <button type="submit"  class="btn btn-outline-secondary btn-primary" style=" color: black;background-color: blue;">Search
+                </button>        
+            </div>    
+        </div>
+        
+    </form>
+
+</div>
+<div class="container-fluid col-2">
+        
+    <ul class="navbar-nav ml-auto mr-5">
+        <li class="nav-item">
+            <a  class="nav-link" href="{{url_for('home')}}">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" routerLink="#" id="navbardrop" data-toggle="dropdown">
+                Hi, {{data['Fname']}} {{data['Lname']}}
+            </a>
+            <div class="dropdown-menu mt-3"  >
+                <a class="dropdown-item"  href="{{url_for('profile')}}" >My Profile</a>
+                <a class="dropdown-item" href="{{url_for('logout')}}" >Log Out</a>
+            </div>  
+            
+        </li>
+    </ul> 
+  </div>    
+{% endblock %}
+
+{% block content %}
+
+<div class="container" style="color: black;background-color: white;margin-top: 100px;border-radius: 10px;">
+    <div class="page text-center">
+        <img style="border-radius: 50%;" class="mt-5" src="../static/img/profile-img.png">
+        <br><br>
+        <h2 >
+            {{data['Fname']}} {{data['Lname']}}
+        </h2>
+        <br><br>
+        <div class="row">
+            <div class="col-4 mx-auto"><b>Favourate Genre</b>
+                <br><br>
+                {% for i in data['gnereList']%}
+                    {{i[0]}}
+                <hr>
+                {%endfor%}
+            </div>
+            <div class="col-4 mx-auto"><b>Rated Movies</b>
+                <br><br>
+                {% for i in data['gnereList']%}
+                    {{i[1]}}
+                    <hr>
+                {%endfor%}
+            </div>
+            <div class="col-4 mx-auto strong"><b>   Average Rating</b>
+                <br><br>
+                {% for i in data['gnereList']%}
+                    {{i[2]}}
+                    <hr>
+                {%endfor%}
+            </div>
+        </div>
+       
+        <div class="row">
+            <div class="col-4 mx-auto"><b>Most View Genre</b>
+                <br><br>
+                {% for i in data['mostView']%}
+                    {{i[0]}}
+                <hr>
+                {%endfor%}
+            </div>
+            <div class="col-4 mx-auto"><b>Rated Movies</b>
+                <br><br>
+                {% for i in data['mostView']%}
+                    {{i[1]}}
+                    <hr>
+                {%endfor%}
+            </div>
+            <div class="col-4 mx-auto strong"><b>   Average Rating</b>
+                <br><br>
+                {% for i in data['mostView']%}
+                    {{i[2]}}
+                    <hr>
+                {%endfor%}
+            </div>
+        </div>
+       
+    </div>
+</div>
+
+
+{% endblock %}

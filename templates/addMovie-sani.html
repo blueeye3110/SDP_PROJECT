@@ -1,0 +1,97 @@
+{% extends "demo.html" %}
+{% block title %}ADD MOVIE{% endblock %}
+
+{% block navbar %}
+
+<div class="container-fluid">
+    
+    <ul class="navbar-nav ml-auto mr-3">
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('userDetails')}}" >User Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('userStatestic')}}">User Statestic</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('movieDetails')}}">Movie Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('movieStatestic')}}" >Movie Statestic</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link"  href="{{url_for('addMovie')}}"  >Add Movie</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('logout')}}" >Log Out</a>
+        </li>
+    </ul> 
+  </div>    
+{% endblock %}
+
+{%  block content  %}
+{% if mdata['msg'] != " " %}
+  a
+{% endif %}
+<div class="container" style="color: black;background-color: white;margin-top: 100px;border-radius: 10px;">
+    <div class="page text-center">
+        <div class="col-8" style=" padding-top: 1.5%;padding-left: 35%;">
+            <form action="{{url_for('addMovie')}}" method="POST">
+                <div class="input-group mb-3"  >
+                    <input type="text" class="form-control"  title="Enter Imdb Id" placeholder=" Enter Movie....." style=" border-radius: 5px; " name="imdbId">
+                    <input type="hidden" name="link" value="searchMovieData">
+              
+                    <div>
+                        <button type="submit"  class="btn btn-outline-secondary btn-primary" style=" color: black;">Search
+                        </button>        
+                    </div>    
+                </div>
+                
+            </form>
+        
+        </div>
+        
+        <div class="row" style="padding-bottom: 5%;padding-top: 5%;">
+            <div class="col-5" style="padding-left: 10%; ">
+                <div class="card" style="height: 100%; width: 100%;" >
+                    <img class="card-img"  src="{{mdata['posterurl']}}" onerror="this.src='../static/img/alt.png';" >
+                    <div class="card-img-overlay text-center mt-5 d-flex flex-column justify-content-end" style="background: linear-gradient(to top,#000 30% ,transparent); color: wheat;" > 
+                
+                        <p class="card-title" style="font-size: 1vw;">{{mdata['title']}}</p>    
+                    </div>
+                </div>
+            </div>
+            <div class="col-7" style="padding-left: 5%;padding-top: 1%;text-align:left    ;">
+            <style>
+                td{
+                    padding-left: 5%;
+                    border-bottom:  1px solid #ddd;
+                }
+            </style>
+            <table> 
+                <tr><td>Genre          </td><td>:</td><td style="margin: 1%;"> {{mdata['genre']}}</td></tr>
+                <tr><td>Run Time</td><td>:</td><td style="margin: 1%;"> {{mdata['runtime']}}</td></tr>
+                <tr><td>Release Date   </td><td>:</td><td style="margin: 1%;"> {{mdata['releasedate']}}</td></tr>
+                <tr><td>Cast   </td><td>:</td><td style="margin: 1%;"> {{mdata['cast']}}</td></tr>
+                <tr><td>Director   </td><td>:</td><td style="margin: 1%;"> {{mdata['director']}}</td></tr>
+                <tr><td>Writer   </td><td>:</td><td style="margin: 1%;"> {{mdata['writer']}}</td></tr>
+                <tr><td>summary   </td><td>:</td><td style="margin: 1%;"> {{mdata['summary']}}</td></tr>
+            </table>
+            
+            <form action="{{url_for('addMovie')}}" method="POST">
+                <input type="hidden" name="link" value="addMovieData">
+                <input type="hidden" name="title" value="{{mdata['title']}}">
+                <input type="hidden" name="genre" value="{{mdata['genre']}}">
+                <input type="hidden" name="imdbId" value="{{mdata['']}}">
+                
+                <button class="btn btn-outline-secondary btn-primary" style="margin-left: 35%;margin-top: 4%;" type="submit">Add</button>
+              
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+
+
+
+{% endblock %}

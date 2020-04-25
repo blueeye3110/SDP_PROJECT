@@ -1,0 +1,18 @@
+//to commit changes
+
+git clone <urlrepo>
+git add .
+git commit -m "message"
+git pull 
+git push origin <branchname>
+
+
+//to make new branch
+git branch <branchname>
+
+//to switch to branch
+git checkout <branchname>
+
+//to check commit status
+git status
+

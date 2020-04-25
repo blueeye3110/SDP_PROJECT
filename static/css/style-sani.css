@@ -1,0 +1,29 @@
+  html{
+    scroll-behavior: smooth;
+  }
+  body{
+    margin: 0%;
+  }
+  
+  .mtop{
+      margin-top: 5vw;
+  }
+  .pbot{
+      padding-bottom: 75px;
+  }
+
+  .userProf{
+    margin-top: 5%;
+    width: 250px;
+    max-width: 250px;
+    border-radius: 50%;
+  }
+
+  .card-zoom{
+    transition: 0.25s;
+  }
+
+  .card-zoom:hover {
+    transform: scale(1.2);
+  }
+  

@@ -1,0 +1,262 @@
+{% extends "demo.html" %}
+{% block title %}MOVIE INFORMATION{% endblock %}
+
+{% block navbar %}
+<div class="col-8" style=" padding-top: 1.5%;padding-left: 15%;">
+    <form action="{{url_for('search')}}" method="POST">
+        <div class="input-group mb-3"  >
+            <input type="text" class="form-control"  placeholder=" Search Movie....." style=" border-radius: 5px; " name="search" required>
+            <div>
+                <button type="submit"  class="btn btn-outline-secondary btn-primary" style=" color: black;background-color: blue;">Search
+                </button>        
+            </div>    
+        </div>
+        
+    </form>
+
+</div>
+
+<div class="container-fluid col-2">
+    <ul class="navbar-nav ml-auto mr-5">
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('home')}}">Home</a>
+        </li>
+       <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" routerLink="#" id="navbardrop" data-toggle="dropdown">
+                Hi, {{userIn['Fname']}} {{ userIn['Lname']}}
+            </a>
+            <div class="dropdown-menu mt-3"  >
+                <a class="dropdown-item" href="{{url_for('profile')}}" >My Profile</a>
+                <a class="dropdown-item" href="{{url_for('logout')}}" >Log Out</a>
+            </div>  
+        </li>
+    </ul> 
+ </div>    
+
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .rating {
+    unicode-bidi: bidi-override;
+    color: #c5c5c5;
+    font-size: 25px;
+    height: 25px;
+    width: 100px;
+    margin: 0 auto;
+    position: relative;
+    padding: 0;
+    text-shadow: 0px 1px 0 #a2a2a2;
+  }
+  
+  .rating-upper {
+    color: #e7711b;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+  
+  .rating-lower {
+    padding: 0;
+    display: flex;
+    z-index: 0;
+  }
+  
+  </style>
+  
+  <style>
+    .rate {
+    display: inline-block;
+    border: 0;
+    }
+    .rate > input {
+        display: none;
+    }
+    .rate > label {
+        float: right;
+    }
+    .rate > label:before {
+        display: inline-block;
+        font-size: 1.5rem;
+        padding: .3rem .2rem;
+        margin: 0;
+        cursor: pointer;
+        font-family: FontAwesome;
+        content: "\f005 "; 
+    }
+    .rate > label:last-child:before {
+        content: "\f006 "; 
+    }
+    .rate .half:before {
+        content: "\f089 ";
+        position: absolute;
+        padding-right: 0;
+    }
+    input:checked ~ label, 
+    label:hover, label:hover ~ label { color: #e7711b;  } 
+
+    input:checked + label:hover, input:checked ~ label:hover,
+    input:checked ~ label:hover ~ label, 
+    label:hover ~ input:checked ~ label { color: rgb(235, 160, 55);  } 
+
+  </style>
+  <div class="container" style="color: black;background-color: white;margin-top: 100px;border-radius: 10px;">
+      <div class="page text-center">
+          
+          <div class="row" style="padding-bottom: 5%;padding-top: 5%;">
+              <div class="col-5" style="padding-left: 10%; ">
+                  <div class="card" style="height: 100%; width: 100%;" >
+                      <img class="card-img"  src="{{data[0]}}" onerror="this.src='../static/img/alt.png';" >
+                      <div class="card-img-overlay text-center mt-5 d-flex flex-column justify-content-end" style="background: linear-gradient(to top,#000 30% ,transparent); color: wheat;" > 
+                  
+                          <p class="card-title" style="font-size: 1vw;">{{data[1]}}</p>    
+                      </div>
+                  </div>
+              </div>
+              <div class="col-7" style="padding-left: 5%;padding-top: 1%;text-align:left    ;">
+              <style>
+                  td{
+                      padding-left: 5%;
+                      border-bottom:  1px solid #ddd;
+                  }
+              </style>
+              <table > 
+                  <tr><td>Genre          </td><td>:</td><td style="margin: 1%;width: 70%;"> {{data[2]}}</td></tr>
+                  <tr><td>Average Rating </td><td>:</td><td >
+                      <div class="rating mb-2">
+                          <div class="rating-upper" style="width: {{(data[3]*20)}}%">
+                              <span>★</span>
+                              <span>★</span>
+                              <span>★</span>
+                              <span>★</span>
+                              <span>★</span>
+                          </div>
+                          <div class="rating-lower">
+                              <span>★</span>
+                              <span>★</span>
+                              <span>★</span>
+                              <span>★</span>
+                              <span>★</span>
+                          </div>
+                      </div><td></tr>
+                  <tr><td>Totel Rating   </td><td>:</td><td style="margin: 1%;"> {{data[4]}}</td></tr>
+                  <tr><td>Release Date </td><td>:</td><td style="margin: 1%;"> {{mdata['releasedate']}}</td></tr>
+                  <tr><td>Run Time </td><td>:</td><td style="margin: 1%;"> {{mdata['runtime']}}</td></tr>
+                  <tr><td>Cast</td><td>:</td><td style="margin: 1%;"> {{mdata['cast']}}</td></tr>
+                  <tr><td>Director</td><td>:</td><td style="margin: 1%;"> {{mdata['director']}}</td></tr>
+                  <tr><td>Writer</td><td>:</td><td style="margin: 1%;"> {{mdata['writer']}}</td></tr>
+                  <tr><td>Summary</td><td>:</td><td style="margin: 1%;"> {{mdata['summary']}}</td></tr>
+                  {% if test[0] %}    
+                  <tr><td>Given Rating   </td><td>:</td><td> 
+                    <div class="rating mb-2">
+                        <div class="rating-upper" style="width: {{(test[1]*20)}}%">
+                            <span>★</span>
+                            <span>★</span>
+                            <span>★</span>
+                            <span>★</span>
+                            <span>★</span>
+                        </div>
+                        <div class="rating-lower">
+                            <span>★</span>
+                            <span>★</span>
+                            <span>★</span>
+                            <span>★</span>
+                            <span>★</span>
+                        </div>
+                    </div><td></tr>  
+              </table>                         
+                  {% else %}
+                  <tr><td>Give Rating   </td><td>:</td><td> 
+                    <form class="text-center" action="{{url_for('movieInfo')}}" method="POST">
+
+                        <fieldset class="rate">
+                            <input type="radio" id="rating10" name="rating" value="5" /><label for="rating10" title="5 stars"></label>
+                            <input type="radio" id="rating9" name="rating" value="4.5" /><label class="half" for="rating9" title="4 1/2 stars"></label>
+                            <input type="radio" id="rating8" name="rating" value="4" /><label for="rating8" title="4 stars"></label>
+                            <input type="radio" id="rating7" name="rating" value="3.5" /><label class="half" for="rating7" title="3 1/2 stars"></label>
+                            <input type="radio" id="rating6" name="rating" value="3" /><label for="rating6" title="3 stars"></label>
+                            <input type="radio" id="rating5" name="rating" value="2.5" /><label class="half" for="rating5" title="2 1/2 stars"></label>
+                            <input type="radio" id="rating4" name="rating" value="2" /><label for="rating4" title="2 stars"></label>
+                            <input type="radio" id="rating3" name="rating" value="1.5" /><label class="half" for="rating3" title="1 1/2 stars"></label>
+                            <input type="radio" id="rating2" name="rating" value="1" /><label for="rating2" title="1 star"></label>
+                            <input type="radio" id="rating1" name="rating" value="0.5" /><label class="half" for="rating1" title="1/2 star"></label>
+                        
+                        </fieldset>
+                     
+                  </td></tr>
+                  
+              </table> 
+              <input type="hidden" name="link" value="movieInfo">
+              <input type="hidden" name="userId" value="{{userIn['userId']}}">
+              <input type="hidden" name="movieId" value="{{data[15]}}">
+                  
+              <button class="btn btn-outline-secondary btn-primary" style="margin-left: 35%;margin-top: 4%;" type="submit">Submit</button>
+                      
+            </form> 
+            {% endif %} 
+            </div>
+
+          </div>
+  
+      </div>
+      
+  </div>
+
+  <div style="color: white;margin-top: 100px;">
+    <h1>Similar Movies</h1>
+</div>
+ 
+{% for i in range(2) %}
+<div class="container-fluid" style="color: white;margin-top: 100px;">
+    <div class="row " >
+        {% for j in range(6) %}
+        <div class="col" style="margin: 0px;">
+            <form action="{{ url_for('movieInfo')}}" method="POST">
+                <input type="hidden" name="movieId" value="{{sdata[i*6+j][0]}}">
+                <input type="hidden" name="title" value="{{sdata[i*6+j][1]}}">
+                <input type="hidden" name="poster" value="{{sdata[i*6+j][3]}}">
+                <input type="hidden" name="userId" value="{{userIn['userId']}}">
+              
+                <input type="hidden" name="link" value="home">
+                
+                <button type="submit" style="background-color: transparent;border-color: transparent;color: white;">
+                    <div class="card card-zoom pb-3"  >
+                        <img class="card-img" style="height: 260px; widows: 175px; " src="{{sdata[i*6+j][3]}}  " onerror="this.src='../static/img/alt.png';" >
+                        <div class="card-img-overlay text-center mt-5 d-flex flex-column justify-content-end" style="background: linear-gradient(to top,#000 30% ,transparent);" > 
+                       
+                            <p class="card-title" style="font-size: 1vw;">{{sdata[i*6+j][1]}}</p>    
+                        </div>
+                        <div class="rating">
+                            <div class="rating-upper" style="width: {{sdata[i*6+j][2]*20}}%">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                            <div class="rating-lower">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </button>
+            </form>     
+         </div>
+        {% endfor %}
+        
+        
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}

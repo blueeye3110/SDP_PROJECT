@@ -1,0 +1,81 @@
+{% extends "demo.html" %}
+{% block title %}MOVIE DETAILS{% endblock %}
+
+{% block navbar %}
+
+<div class="container-fluid">
+    
+    <ul class="navbar-nav ml-auto mr-3">
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('userDetails')}}" >User Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('userStatestic')}}">User Statestic</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('movieDetails')}}">Movie Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('movieStatestic')}}" >Movie Statestic</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('addMovie')}}"   >Add Movie</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('logout')}}" >Log Out</a>
+        </li>
+    </ul> 
+  </div>    
+{% endblock %}
+
+{% block content %}
+
+<div class="container" style="color: black;background-color: white;margin-top: 100px;border-radius: 10px;">
+    <div class="page text-center">
+        <div class="row ">
+            <div class="col-1 mt-4 "><b>Movie Id</b>
+                <br><br><br>
+                {% for i in data%}
+                <form action="{{url_for('movieStatestic')}}" method="POST">
+                    <input type="hidden" name="movieId" value="{{i[0]}}">
+                    <button type="submit" style="background-color: transparent;border-color: transparent;color: black;">
+                        {{i[0]}}
+                    </button>
+                </form>
+                <hr>
+                {%endfor%}
+            </div>
+            <div class="col-10 mt-4"><b>Title</b>
+                <br><br><br><br>
+                {% for i in data%}
+                <form action="{{url_for('userStatestic')}}" method="POST">
+                    <input type="hidden" name="userId" value="{{i[0]}}">
+                    <button type="submit" style="background-color: transparent;border-color: transparent;color: black;">
+                        {{i[1]}}
+                    </button>
+                </form>
+                <hr>
+                {%endfor%}
+            </div>
+            <div class="col-1 mt-4"><b> Rated Count</b>
+                <br><br><br>
+                {% for i in data%}
+                <form action="{{url_for('userStatestic')}}" method="POST">
+                    <input type="hidden" name="userId" value="{{i[0]}}">
+                    <button type="submit" style="background-color: transparent;border-color: transparent;color: black;">
+                        {{i[2]}}
+                    </button>
+                </form>
+                <hr>
+                {%endfor%}
+            </div>
+          </div>
+       
+       
+    </div>
+</div>
+
+
+
+
+{% endblock %}

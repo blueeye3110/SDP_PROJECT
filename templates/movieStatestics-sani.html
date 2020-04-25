@@ -1,0 +1,138 @@
+{% extends "demo.html" %}
+{% block title %}MOVIE SATASTICS{% endblock %}
+
+{% block navbar %}
+
+<div class="container-fluid">
+    
+    <ul class="navbar-nav ml-auto mr-3">
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('userDetails')}}" >User Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('userStatestic')}}">User Statestic</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('movieDetails')}}">Movie Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('movieStatestic')}}" >Movie Statestic</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link"  href="{{url_for('addMovie')}}"  >Add Movie</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('logout')}}" >Log Out</a>
+        </li>
+    </ul> 
+  </div>    
+{% endblock %}
+
+{% block content %}
+<style>
+  .rating {
+  unicode-bidi: bidi-override;
+  color: #c5c5c5;
+  font-size: 25px;
+  height: 25px;
+  width: 100px;
+  margin: 0 auto;
+  position: relative;
+  padding: 0;
+  text-shadow: 0px 1px 0 #a2a2a2;
+}
+
+.rating-upper {
+  color: #e7711b;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.rating-lower {
+  padding: 0;
+  display: flex;
+  z-index: 0;
+}
+
+</style>
+
+<div class="container" style="color: black;background-color: white;margin-top: 100px;border-radius: 10px;">
+    <div class="page text-center">
+        <div class="col-8" style=" padding-top: 1.5%;padding-left: 35%;">
+            <form action="{{url_for('movieStatestic')}}" method="POST">
+                <div class="input-group mb-3"  >
+                    <input type="text" class="form-control" title="Enter Movie Id" placeholder=" Search Movie...." style=" border-radius: 5px; " name="movieId">
+                    <div>
+                        <button type="submit"  class="btn btn-outline-secondary btn-primary" style=" color: black;">Search
+                        </button>        
+                    </div>    
+                </div>
+                
+            </form>
+        
+        </div>
+        
+        <div class="row" style="padding-bottom: 5%;padding-top: 5%;">
+            <div class="col-5" style="padding-left: 10%; ">
+                <div class="card" style="height: 100%; width: 100%;" >
+                    <img class="card-img"  src="{{data[0]}}" onerror="this.src='../static/img/alt.png';" >
+                    <div class="card-img-overlay text-center mt-5 d-flex flex-column justify-content-end" style="background: linear-gradient(to top,#000 30% ,transparent); color: wheat;" > 
+                
+                        <p class="card-title" style="font-size: 1vw;">{{data[1]}}</p>    
+                    </div>
+                </div>
+            </div>
+            <div class="col-7" style="padding-left: 5%;padding-top: 1%;text-align:left    ;">
+            <style>
+                td{
+                    padding-left: 5%;
+                    border-bottom:  1px solid #ddd;
+                }
+            </style>
+            <table> 
+                <tr><td>Genre          </td><td>:</td><td style="margin: 1%;width: 70%;"> {{data[2]}}</td></tr>
+                <tr><td>Average Rating </td><td>:</td><td style="margin: 1%;">
+                    <div class="rating mb-2">
+                        <div class="rating-upper" style="width: {{(data[3]*20)}}%">
+                            <span>★</span>
+                            <span>★</span>
+                            <span>★</span>
+                            <span>★</span>
+                            <span>★</span>
+                        </div>
+                        <div class="rating-lower">
+                            <span>★</span>
+                            <span>★</span>
+                            <span>★</span>
+                            <span>★</span>
+                            <span>★</span>
+                        </div>
+                    </div><td></tr>
+                <tr><td>Totel Rating   </td><td>:</td><td style="margin: 1%;"> {{data[4]}}</td></tr>
+                <tr><td>5 Star       </td><td>:</td><td> <div style="width: 100%;height: ; background-color: #ddd;margin: 1%;border-radius: 5px;text-align: right;"><div style="width: {{(data[14]*100)/data[4]}}%; background-color:#00b300;border-radius: 5px;">  {{data[14]}} </div></div></td></tr>
+                <tr><td>4.5 Star         </td><td>:</td><td> <div style="width: 100%;background-color: #ddd;margin: 1%;border-radius: 5px;text-align: right;"><div style="width: {{(data[13]*100)/data[4]}}%; background-color: #4ce600;border-radius: 5px;">  {{data[13]}} </div></div></div></td></tr>
+                <tr><td>4 Star       </td><td>:</td><td> <div style="width: 100%;background-color: #ddd;margin: 1%;border-radius: 5px;text-align: right;"><div style="width: {{(data[12]*100)/data[4]}}%; background-color: #b7dd29;border-radius: 5px;">  {{data[12]}} </div></div></td></tr>
+                <tr><td>3.5 Star         </td><td>:</td><td> <div style="width: 100%;background-color: #ddd;margin: 1%;border-radius: 5px;text-align: right;"><div style="width: {{(data[11]*100)/data[4]}}%; background-color: #e6e600;border-radius: 5px;">  {{data[11]}} </div></div></td></tr>
+                <tr><td>3 Star       </td><td>:</td><td> <div style="width: 100%;background-color: #ddd;margin: 1%;border-radius: 5px;text-align: right;"><div style="width: {{(data[10]*100)/data[4]}}%; background-color: #ffe234;border-radius: 5px;">  {{data[10]}} </div></div></td></tr>
+                <tr><td>3.5 Star         </td><td>:</td><td> <div style="width: 100%;background-color: #ddd;margin: 1%;border-radius: 5px;text-align: right;"><div style="width: {{(data[9]*100)/data[4]}}%; background-color: #ffcc66;border-radius: 5px;">  {{data[9]}} </div></div></td></tr>
+                <tr><td>2 Star       </td><td>:</td><td> <div style="width: 100%;background-color: #ddd;margin: 1%;border-radius: 5px;text-align: right;"><div style="width: {{(data[8]*100)/data[4]}}%; background-color: #ffa534;border-radius: 5px;">  {{data[8]}} </div></div></td></tr>
+                <tr><td>2.5 Star         </td><td>:</td><td> <div style="width: 100%;background-color: #ddd;margin: 1%;border-radius: 5px;text-align: right;"><div style="width: {{(data[7]*100)/data[4]}}%; background-color: #ff6600;border-radius: 5px;">  {{data[7]}} </div></div></td></tr>
+                <tr><td>1 Star       </td><td>:</td><td> <div style="width: 100%;background-color: #ddd;margin: 1%;border-radius: 5px;text-align: right;"><div style="width: {{(data[6]*100)/data[4]}}%;background-color: #ff0000;border-radius: 5px;">  {{data[6]}} </div></div></td></tr>
+                <tr><td>0.5 Star         </td><td>:</td><td> <div style="width: 100%;background-color: #ddd;margin: 1%;border-radius: 5px;text-align: right;"><div style="width: {{(data[5]*100)/data[4]}}%; background-color: #cc0000 ;border-radius: 5px;">  {{data[5]}} </div></div></td></tr>
+            </table>    
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+
+
+
+
+{% endblock %}

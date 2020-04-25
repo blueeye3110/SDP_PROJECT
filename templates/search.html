@@ -1,0 +1,135 @@
+{% extends "demo.html" %}
+{% block title %}SEARCH{% endblock %}
+
+{% block navbar %}
+<div class="col-8" style=" padding-top: 1.5%;padding-left: 15%;">
+    <form action="{{url_for('search')}}" method="POST">
+        <div class="input-group mb-3"  >
+            <input type="text" class="form-control"  placeholder=" Search Movie....." style=" border-radius: 5px; " name="search" required>
+            <div>
+                <button type="submit"  class="btn btn-outline-secondary btn-primary" style=" color: black;background-color: blue; ">Search
+                </button>        
+            </div>    
+        </div>
+        
+    </form>
+
+</div>
+<div class="container-fluid col-2">
+    <ul class="navbar-nav ml-auto mr-5">
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('home')}}">Home</a>
+        </li>
+       <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" routerLink="#" id="navbardrop" data-toggle="dropdown">
+                Hi, {{userIn['Fname']}} {{userIn['Lname']}}
+            </a>
+            <div class="dropdown-menu mt-3"  >
+                <a class="dropdown-item" href="{{url_for('profile')}}" >My Profile</a>
+                <a class="dropdown-item" href="{{url_for('logout')}}" >Log Out</a>
+            </div>  
+        </li>
+    </ul> 
+ </div>    
+
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+    .rating {
+    unicode-bidi: bidi-override;
+    color: #c5c5c5;
+    font-size: 25px;
+    height: 25px;
+    width: 100px;
+    margin: 0 auto;
+    position: relative;
+    padding: 0;
+    text-shadow: 0px 1px 0 #a2a2a2;
+  }
+  
+  .rating-upper {
+    color: #e7711b;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+  
+  .rating-lower {
+    padding: 0;
+    display: flex;
+    z-index: 0;
+  }
+  
+  </style>
+  
+  <style>
+    .card-zoom{
+    transition: 0.25s;
+  }
+
+  .card-zoom:hover {
+    transform: scale(1.2);
+  }
+
+</style>
+
+
+{% for i in range(length+1) %}
+<div class="container-fluid" style="color: white;margin-top: 100px;">
+    <div class="row " >
+        {% for j in range(6) %}
+        <div class="col" style="margin: 0px;">
+            {% if (i*6+j) < totel %}
+            <form action="{{ url_for('movieInfo')}}" method="POST">
+                <input type="hidden" name="movieId" value="{{search[i*6+j][0]}}">
+                <input type="hidden" name="title" value="{{search[i*6+j][1]}}">
+                <input type="hidden" name="poster" value="{{search[i*6+j][3]}}">
+                <input type="hidden" name="userId" value="{{userIn['userId']}}">
+              
+                <input type="hidden" name="link" value="search">
+                
+                <button type="submit" style="background-color: transparent;border-color: transparent;color: white;">
+                    <div class="card card-zoom pb-3"  >
+                        <img class="card-img" style="height: 260px; widows: 175px; " src="{{search[i*6+j][3]}}  " onerror="this.src='../static/img/alt.png';" >
+                        <div class="card-img-overlay text-center mt-5 d-flex flex-column justify-content-end" style="background: linear-gradient(to top,#000 30% ,transparent);" > 
+                       
+                            <p class="card-title" style="font-size: 1vw;">{{search[i*6+j][1]}}</p>    
+                        </div>
+                        <div class="rating">
+                            <div class="rating-upper" style="width: {{search[i*6+j][2]*20}}%">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                            <div class="rating-lower">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </button>
+            </form>     
+            {% endif %}
+        </div>
+        {% endfor %}
+        
+        
+    </div>
+</div>
+{% endfor %}
+
+
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends "demo.html" %}
+{% block title %}USER STATESTICS{% endblock %}
+
+{% block navbar %}
+
+<div class="container-fluid">
+    
+    <ul class="navbar-nav ml-auto mr-3">
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('userDetails')}}" >User Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('userStatestic')}}">User Statestic</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('movieDetails')}}">Movie Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('movieStatestic')}}" >Movie Statestic</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('addMovie')}}"   >Add Movie</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('logout')}}" >Log Out</a>
+        </li>
+    </ul> 
+  </div>    
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container" style="color: black;background-color: white;margin-top: 100px;border-radius: 10px;">
+    <div class="page text-center">
+        <div class="col-8" style=" padding-top: 1.5%;padding-left: 35%;">
+            <form action="{{url_for('userStatestic')}}" method="POST">
+                <div class="input-group mb-3"  >
+                    <input type="text" class="form-control"  placeholder=" Search User....." title="Enter User Id" style=" border-radius: 5px; " name="userId">
+                    <div>
+                        <button type="submit"  class="btn btn-outline-secondary btn-primary" style=" color: black;">Search
+                        </button>        
+                    </div>    
+                </div>
+                
+            </form>
+        
+        </div>
+        
+        <p> {{data[0]}} {{data[1]}} Average Rating genre wise</p>
+    
+        <div class="row">
+            <div class="col-3">
+                <b>Genre</b>
+                <br><br>
+                {% for i in data[2] %}
+                    <div>
+                    <b>{{i}}</b>
+                    <hr>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-6">
+                <b>Average Rating</b>
+                <br><br>
+                {% for i in data[3] %}
+                </style>
+                    <div class="con">
+                        <div>{{i}}</div>
+                        <hr>
+                    </div>
+
+                {% endfor %}
+            </div>
+
+            <div class="col-3">
+                <b>Count</b>
+                <br><br>
+                {% for i in data[4] %}
+                    <div>
+                    <b>{{i}}</b>
+                    <hr>
+                    </div>
+               {% endfor %}
+            </div>
+
+        </div>
+
+        
+    </div>
+</div>
+
+
+
+
+{% endblock %}

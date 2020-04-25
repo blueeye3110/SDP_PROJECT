@@ -1,0 +1,115 @@
+{% extends "demo.html" %}
+{% block title %}LOGIN{% endblock %}
+
+
+{%block navbar %} 
+<div class="container-fluid">
+  <ul class="navbar-nav ml-auto mr-5">
+    <li class="bav-item">  
+      <form action="{{url_for('register')}}" method="GET">
+        <button  class="btn btn-md text-center ml-2 my-auto" style="border-radius: 0.7vw; background-color: #0080ff;float: right; color: white;width: 10vw;height: 3vw; font-size: 1.3vmax;" onclick="login()">
+          REGISTER
+        </button>
+      </form>
+    </li>  
+  </ul> 
+</div>
+{% endblock %}
+     
+{%block content %}    
+<div style="background-image:url('static/img/bgimage.png');background-size: cover ;height: 900px;">
+  <div class="row  mx-auto" style="width: 35vw;"> 
+    <div class="col-12" style="margin-top: 10vw;">
+      <div class="card " style="height:500px ;width: 33vw; background-color: rgba(0,0,0,.7); ">
+        <div class="card-body mx-auto " style="color: white;">
+          <h1 class="card-title mt-4" style="font-weight: 300;font-size: 2.5vw;">
+            <b>
+              SIGN IN
+            </b>
+          </h1>
+          <form class="form-signin " method="post" action="{{ url_for('home')}}">
+            <div class="my-5">
+              <input  type="email" id="inputUserEamilAdd" placeholder="Entet Email Address" class="form-control " style="border-radius: 0.5vw;background-color: #222;height: 3.5vw;width: 22.5vw;font-size: 1.5vw;" name="userEmailAdd" required >
+            </div>
+            <div class="my-4">    
+              <input  type="password" id="inputPassord" placeholder="Entet Password" class="form-control" style="border-radius: 0.5vw;background-color: #222;height: 3.5vw;width: 22.5vw;font-size: 1.5vw;" name="password" required >
+            </div>
+            <p class="text-danger">{{error}}</p>
+            <div class="mt-5">
+              <button type="submit" id="login" class=" btn btn-md login-btn btn-submit text-center form_control" style="border-radius: 0.5vw; background-color: #0080ff; color: white;height: 3.5vw;width: 22.5vw;font-size: 1.5vw;">
+                SIGN IN
+              </button>
+            </div>
+            
+          </form>
+        </div>   
+      </div>
+    </div>
+  </div>
+</div>
+<div style="background-color: black; height: 100%; " class="my-1">
+  <div class="row">
+    <div class="col-4 py-5 ml-5" >
+      <div class="card  my-5 " style=" border-color: white;height: 15vw; width: 25vw; margin-left: 6.5vw; ">
+        <div class="card-body text-center">
+          <i class="fa fa-map-marked-alt text-primary my-2 ">
+          </i>
+          <h4 class="text-uppercase m-0" style="font-size: 2vmax;">
+            Address
+          </h4>
+          <hr class="my-4">
+          <div class="small text-black-50" style="font-size: 1vmax;">
+            102, jashoda apartment, vaniyavad circle
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 py-5" >
+      <div class="card  my-5 mx-auto" style="border-color: white;height: 15vw; width: 25vw;margin-right: 1vw;">
+        <div class="card-body text-center">
+          <i class="fa fa-envelope text-primary my-2 ">
+          </i>
+          <h4 class="text-uppercase m-0" style="font-size: 2vmax;">
+            Email
+          </h4>
+          <hr class="my-4">
+          <div class="small text-black-50" style="font-size: 1vmax;">
+            saniranpariya456@gmail.com
+          </div>
+        </div>  
+      </div> 
+    </div>
+    <div class="col-4 py-5" >
+      <div class="card  my-5 " style="border-color: white;height: 15vw;width: 25vw;margin-left: 2vw; margin-right: 6.5vw;">
+        <div class="card-body text-center">
+          <i class="fa fa-mobile-alt text-primary my-2 ">
+          </i>
+          <h4 class="text-uppercase m-0" style="font-size: 2vmax;">
+            Phone
+          </h4>
+          <hr class="my-4">
+          <div class="small text-black-50" style="font-size: 1vmax;">
+            +91 9537871456
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+      <div class="social d-flex justify-content-center">
+        <a href="#" class="mx-2">
+          <i class="fab fa-twitter mx-2" style="font-size: 2.5vw;">
+          </i>
+        </a>
+        <a href="#" class="mx-2">
+          <i class="fab fa-facebook-f mx-2" style="font-size: 2.5vw;">
+          </i>
+        </a>
+        <a href="#" class="mx-2">
+          <i class="fab fa-instagram mx-2" style="font-size: 2.5vw;">
+          </i>
+        </a>
+      </div>  
+      </div>
+  </div>    
+{% endblock %}
+    
